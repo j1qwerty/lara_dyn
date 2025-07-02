@@ -1,5 +1,5 @@
 ## add new products table to db 
-- create products migration anad controller  ` php artisan make:model Product -mcr  `
+- create products migration and controller  ` php artisan make:model Product  `
 
 ### add products to db
 - edit database/migration/ products 
@@ -27,8 +27,21 @@
 ```
 
 ### controller
-- ediT App/Http/Controllers/ProductController.php
-- to uplaod images/files create public storage link ` php artisan storage:link  `
+- ediT App/Http/Controllers/ProductController.php `
+- store images in public/uploads/products/
+```
+ // Handle Image 1 upload
+        if ($request->hasFile('image_1')) {
+            // Delete old image file if it exists
+            if (!empty($data->image_1) && file_exists(public_path($data->image_1))) {
+                unlink(public_path($data->image_1));
+            }
+            $file = $request->file('image_1');
+            $filename = time() . '_image1_' . $file->getClientOriginalName();
+            $file->move(public_path('upload/a4page2section1'), $filename);
+            $data->image_1 = 'upload/a4page2section1/' . $filename;
+        }
+```
 
 ```php 
 
